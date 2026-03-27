@@ -27,7 +27,7 @@ export async function GET() {
       accessKeyPrefix: accessKey.slice(0, 8) + "...",
       secretKeyLength: secretKey.length,
       testSignature: testSig,
-      runtime: typeof EdgeRuntime !== "undefined" ? "edge" : "nodejs",
+      runtime: typeof globalThis !== "undefined" && "EdgeRuntime" in globalThis ? "edge" : "nodejs",
     },
   }, { status: result.ok ? 200 : 401 });
 }
