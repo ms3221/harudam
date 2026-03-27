@@ -7,7 +7,7 @@ export async function GET() {
 
   if (!accessKey || !secretKey) {
     return NextResponse.json(
-      { ok: false, message: "API 키가 설정되지 않았습니다." },
+      { ok: false, message: "API 키가 설정되지 않았습니다.", debug: { hasAccessKey: !!accessKey, hasSecretKey: !!secretKey } },
       { status: 500 }
     );
   }
@@ -15,5 +15,11 @@ export async function GET() {
   const client = new CoupangClient(accessKey, secretKey);
   const result = await client.healthCheck();
 
-  return NextResponse.json(result, { status: result.ok ? 200 : 401 });
+  return NextResponse.json({
+    ...result,
+    debug: {
+      accessKeyPrefix: accessKey.slice(0, 8) + "...",
+      secretKeyLength: secretKey.length,
+    },
+  }, { status: result.ok ? 200 : 401 });
 }
