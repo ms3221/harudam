@@ -682,6 +682,10 @@ function AdminPage() {
 }
 
 function ProductGrid({ products, showCoupangButton = false, registeredProductCodes = [] }: { products: HotProduct[]; showCoupangButton?: boolean; registeredProductCodes?: string[] }) {
+  const [loadingItems, setLoadingItems] = useState<Set<string>>(new Set());
+  const startLoading = (id: string) => setLoadingItems((prev) => new Set(prev).add(id));
+  const stopLoading = (id: string) => setLoadingItems((prev) => { const next = new Set(prev); next.delete(id); return next; });
+
   const formatPrice = (price: number | null) => {
     if (!price) return "-";
     return price.toLocaleString("ko-KR") + "원";
