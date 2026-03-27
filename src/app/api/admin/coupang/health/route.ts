@@ -12,6 +12,12 @@ export async function GET() {
     );
   }
 
+  // 서명 디버그
+  const { generateSignature } = await import("@/lib/coupang/auth");
+  const testPath = "/v2/providers/seller_api/apis/api/v1/marketplace/meta/category-related-metas/display-category-codes/37544";
+  const testDatetime = "260327T071000Z";
+  const testSig = generateSignature({ method: "GET", path: testPath, accessKey, secretKey, datetime: testDatetime });
+
   const client = new CoupangClient(accessKey, secretKey);
   const result = await client.healthCheck();
 
@@ -20,8 +26,8 @@ export async function GET() {
     debug: {
       accessKeyPrefix: accessKey.slice(0, 8) + "...",
       secretKeyLength: secretKey.length,
-      serverTime: new Date().toISOString(),
-      serverTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      testSignature: testSig,
+      runtime: typeof EdgeRuntime !== "undefined" ? "edge" : "nodejs",
     },
   }, { status: result.ok ? 200 : 401 });
 }
