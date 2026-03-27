@@ -20,6 +20,8 @@ export async function GET() {
     debug: {
       accessKeyPrefix: accessKey.slice(0, 8) + "...",
       secretKeyLength: secretKey.length,
+      serverTime: new Date().toISOString(),
+      serverTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   }, { status: result.ok ? 200 : 401 });
 }
