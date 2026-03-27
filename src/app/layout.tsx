@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { BackToTop } from "@/components/ui/BackToTop";
-import { FloatingContact } from "@/components/ui/FloatingContact";
 
 export const metadata: Metadata = {
   title: "하루담 HARUDAM | 가족의 하루를 담다",
@@ -56,13 +52,7 @@ export default function RootLayout({
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
       </head>
-      <body className="antialiased">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <BackToTop />
-        <FloatingContact />
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

@@ -4,3 +4,6 @@
 .next
 out
 .claude
+.mcp.json
+tsconfig.tsbuildinfo
+coupang_guide.pdf
